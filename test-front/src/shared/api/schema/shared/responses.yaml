@@ -1,0 +1,24 @@
+ErrorResponse:
+  description: Resource not found
+  content:
+    application/json:
+      schema:
+        $ref: "#/schemas/Error"
+    text/plain:
+      schema:
+        $ref: "#/schemas/Error"
+    text/json:
+      schema:
+        $ref: "#/schemas/Error"
+
+schemas:
+  Error:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: string

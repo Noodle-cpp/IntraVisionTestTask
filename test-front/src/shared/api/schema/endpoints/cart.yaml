@@ -1,0 +1,106 @@
+schemas:
+  CartListResponse:
+    type: object
+    required:
+      - carts
+      - count
+    properties:
+      carts:
+        type: array
+        items:
+          $ref: '#/schemas/CartResponse'
+      count:
+        type: integer
+        format: int32
+
+  CartResponse:
+    type: object
+    required:
+      - id
+      - sodaId
+      - soda
+      - price
+      - count
+      - brandId
+      - brand
+      - createdAt
+      - sodaName
+      - brandName
+    properties:
+      id:
+        type: string
+        format: uuid
+      sodaId:
+        type: string
+        format: uuid
+      soda:
+        $ref: '#/schemas/SodaResponse'
+      price:
+        type: integer
+        format: int32
+      count:
+        type: integer
+        format: int32
+      brandId:
+        type: string
+        format: uuid
+      brand:
+        $ref: '#/schemas/BrandResponse'
+      createdAt:
+        type: string
+        format: date-time
+      sodaName:
+        type: string
+      brandName:
+        type: string
+
+  SodaResponse:
+    type: object
+    required:
+      - id
+      - name
+      - price
+      - count
+      - brandId
+      - brand
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      price:
+        type: integer
+        format: int32
+      count:
+        type: integer
+        format: int32
+      brandId:
+        type: string
+        format: uuid
+      brand:
+        $ref: '#/schemas/BrandResponse'
+
+  BrandResponse:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+
+getCart:
+  tags:
+    - Cart
+  summary: Get cart
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/schemas/CartListResponse'

@@ -1,0 +1,26 @@
+schemas:
+  BrandResponse:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+
+getAllBrands:
+  tags:
+    - Brands
+  summary: Get all brands
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/schemas/BrandResponse'

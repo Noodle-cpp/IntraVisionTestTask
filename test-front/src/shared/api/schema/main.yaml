@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: Api | v1
+  description: API для управления брендами, газировками и корзиной
+  version: 1.0.0
+servers:
+  - url: http://localhost:5260/
+paths:
+  /Brands:
+    get:
+      $ref: "./endpoints/brand.yaml#/getAllBrands"
+  /Cart:
+    get:
+      $ref: "./endpoints/cart.yaml#/getCart"
+  /Sodas:
+    get:
+      $ref: "./endpoints/soda.yaml#/getAllSodas"
+  /Sodas/price/range:
+    get:
+      $ref: "./endpoints/soda.yaml#/getPriceRange"
+  /{sodaId}/img:
+    get:
+      $ref: "./endpoints/soda.yaml#/getSodaImage"

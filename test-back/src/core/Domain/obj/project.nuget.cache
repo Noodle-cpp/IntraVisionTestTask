@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "igPMV80MJ1A=",
+  "success": true,
+  "projectFilePath": "D:\\test\\test-back\\src\\core\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Noodle\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.0-rc.1.25451.107\\microsoft.extensions.dependencyinjection.abstractions.10.0.0-rc.1.25451.107.nupkg.sha512"
+  ],
+  "logs": []
+}

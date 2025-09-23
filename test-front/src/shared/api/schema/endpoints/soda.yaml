@@ -1,0 +1,224 @@
+schemas:
+  PaginationResponseOfSodaResponse:
+    type: object
+    required:
+      - list
+      - totalCount
+      - totalPages
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/schemas/SodaResponse'
+      totalCount:
+        type: integer
+        format: int32
+      totalPages:
+        type: integer
+        format: int32
+
+  PriceRangeResponse:
+    type: object
+    required:
+      - minPrice
+      - maxPrice
+    properties:
+      minPrice:
+        type: integer
+        format: int32
+      maxPrice:
+        type: integer
+        format: int32
+
+  SodaResponse:
+    type: object
+    required:
+      - id
+      - name
+      - price
+      - count
+      - brandId
+      - brand
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      price:
+        type: integer
+        format: int32
+      count:
+        type: integer
+        format: int32
+      brandId:
+        type: string
+        format: uuid
+      brand:
+        $ref: '#/schemas/BrandResponse'
+
+  BrandResponse:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+
+  FileStreamResult:
+    type: object
+    properties:
+      fileStream:
+        $ref: '#/schemas/Stream'
+      contentType:
+        type:
+          - string
+          - "null"
+      fileDownloadName:
+        type:
+          - string
+          - "null"
+      lastModified:
+        type:
+          - string
+          - "null"
+        format: date-time
+      entityTag:
+        $ref: '#/schemas/EntityTagHeaderValue'
+      enableRangeProcessing:
+        type: boolean
+
+  Stream:
+    type: string
+    contentMediaType: application/octet-stream
+
+  EntityTagHeaderValue:
+    type:
+      - object
+      - "null"
+    properties:
+      tag:
+        $ref: '#/schemas/StringSegment'
+      isWeak:
+        type: boolean
+
+  StringSegment:
+    type: object
+    properties:
+      buffer:
+        type:
+          - string
+          - "null"
+      offset:
+        type: integer
+        format: int32
+      length:
+        type: integer
+        format: int32
+      value:
+        type:
+          - string
+          - "null"
+      hasValue:
+        type: boolean
+
+getAllSodas:
+  tags:
+    - Sodas
+  summary: Get all sodas
+  parameters:
+    - name: BrandId
+      in: query
+      schema:
+        type: string
+        format: uuid
+    - name: MinPrice
+      in: query
+      schema:
+        type: integer
+        format: int32
+    - name: MaxPrice
+      in: query
+      schema:
+        type: integer
+        format: int32
+    - name: page
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 1
+    - name: perPage
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 20
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain:
+          schema:
+            $ref: '#/schemas/PaginationResponseOfSodaResponse'
+        application/json:
+          schema:
+            $ref: '#/schemas/PaginationResponseOfSodaResponse'
+        text/json:
+          schema:
+            $ref: '#/schemas/PaginationResponseOfSodaResponse'
+
+getPriceRange:
+  tags:
+    - Sodas
+  summary: Get price range for sodas
+  parameters:
+    - name: brandId
+      in: query
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain:
+          schema:
+            $ref: '#/schemas/PriceRangeResponse'
+        application/json:
+          schema:
+            $ref: '#/schemas/PriceRangeResponse'
+        text/json:
+          schema:
+            $ref: '#/schemas/PriceRangeResponse'
+
+getSodaImage:
+  tags:
+    - Sodas
+  summary: Get soda image
+  parameters:
+    - name: sodaId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK
+      content:
+        text/plain:
+          schema:
+            $ref: '#/schemas/FileStreamResult'
+        application/json:
+          schema:
+            $ref: '#/schemas/FileStreamResult'
+        text/json:
+          schema:
+            $ref: '#/schemas/FileStreamResult'
+    '404':
+      $ref: '../shared/responses.yaml#/ErrorResponse'
