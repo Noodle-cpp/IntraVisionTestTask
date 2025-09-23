@@ -10,3 +10,4 @@ D:\test\test-back\src\core\Domain\obj\Debug\net9.0\Domain.dll
 D:\test\test-back\src\core\Domain\obj\Debug\net9.0\refint\Domain.dll
 D:\test\test-back\src\core\Domain\obj\Debug\net9.0\Domain.pdb
 D:\test\test-back\src\core\Domain\obj\Debug\net9.0\ref\Domain.dll
+D:\test\test-back\src\core\Domain\obj\Debug\net9.0\Domain.sourcelink.json

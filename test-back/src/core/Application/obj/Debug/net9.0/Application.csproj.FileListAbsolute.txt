@@ -13,3 +13,4 @@ D:\test\test-back\src\core\Application\obj\Debug\net9.0\Application.dll
 D:\test\test-back\src\core\Application\obj\Debug\net9.0\refint\Application.dll
 D:\test\test-back\src\core\Application\obj\Debug\net9.0\Application.pdb
 D:\test\test-back\src\core\Application\obj\Debug\net9.0\ref\Application.dll
+D:\test\test-back\src\core\Application\obj\Debug\net9.0\Application.sourcelink.json

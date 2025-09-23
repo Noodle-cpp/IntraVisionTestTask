@@ -8,6 +8,9 @@ import { SodaListLayoutContent } from "./ui/soda-list-layout-content";
 import {useGetBrands} from "@/features/soda-list/model/use-get-brands.ts";
 import {useGetCarts} from "@/features/soda-list/model/use-get-carts.ts";
 import {useFilter} from "@/features/soda-list/model/use-filter-state.ts";
+import {href, Link} from "react-router-dom";
+import {ROUTES} from "@/shared/model/routes.ts";
+import {useAddToCart} from "@/features/soda-list/model/use-create-cart.ts";
 
 function SodasListPage() {
     // const sodasFilter = useSodasFilters();
@@ -19,13 +22,18 @@ function SodasListPage() {
         minPriceValue: sodasFilter.minPriceValue,
         maxPriceValue: sodasFilter.maxPriceValue,
     })
+    const {addToCart} = useAddToCart();
+
+    const handleAddToCart = (sodaId: string) => {
+        addToCart(sodaId);
+    };
 
     if (!sodasQuery.isPending && sodasQuery.maxPrice > 0 &&
         sodasFilter.minPrice === 0 && sodasFilter.maxPrice === 0) {
         sodasFilter.updateFromApi(sodasQuery.minPrice, sodasQuery.maxPrice);
     }
 
-    return(
+    return (
         <div className="flex flex-col p-10 gap-10">
             <nav>
                 <div className="flex flex-col gap-10">
@@ -89,8 +97,15 @@ function SodasListPage() {
                                                 bg-green-600 text-white
                                                 hover:bg-green-700 hover:opacity-100
                                                 rounded-none"
-                                    disabled={cartsQuery.purchaseCount===0}>
-                                Выбрано: {cartsQuery.purchaseCount}
+                                    disabled={cartsQuery.purchaseCount === 0}
+                                    asChild>
+                                {cartsQuery.purchaseCount === 0 ? (
+                                    <span>Выбрано: {cartsQuery.purchaseCount}</span>
+                                ) : (
+                                    <Link key="cart" to={href(ROUTES.CART)}>
+                                        Выбрано: {cartsQuery.purchaseCount}
+                                    </Link>
+                                )}
                             </Button>
                         </div>
                     </div>
@@ -108,7 +123,9 @@ function SodasListPage() {
                     hasCursor={sodasQuery.hasNextPage}
                     renderList={() =>
                         sodasQuery.sodas?.map((soda) => (
-                            <SodaCard key={soda.id} soda={soda} isProductInCart={cartsQuery.isProductInCart(soda.id)}/>
+                            <SodaCard key={soda.id} soda={soda}
+                                      isProductInCart={cartsQuery.isProductInCart(soda.id)}
+                                      onButtonCLick={() => handleAddToCart(soda.id)}/>
                         ))
                     }
                 />

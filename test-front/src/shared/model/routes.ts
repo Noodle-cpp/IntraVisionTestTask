@@ -3,5 +3,5 @@ import "react-router-dom";
 export const ROUTES = {
     HOME: "/",
     SODAS: "/sodas",
-    SODA: "/cart",
+    CART: "/cart",
 } as const;

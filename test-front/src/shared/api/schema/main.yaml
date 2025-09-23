@@ -12,6 +12,9 @@ paths:
   /Cart:
     get:
       $ref: "./endpoints/cart.yaml#/getCart"
+  /Cart/add/sodas/{sodaId}:
+    post:
+      $ref: "./endpoints/cart.yaml#/addCart"
   /Sodas:
     get:
       $ref: "./endpoints/soda.yaml#/getAllSodas"

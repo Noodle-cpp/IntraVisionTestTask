@@ -249,3 +249,4 @@ D:\test\test-back\src\presentation\Api\bin\Debug\net9.0\Microsoft.Extensions.Dia
 D:\test\test-back\src\presentation\Api\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
 D:\test\test-back\src\presentation\Api\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 D:\test\test-back\src\presentation\Api\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
+D:\test\test-back\src\presentation\Api\obj\Debug\net9.0\Api.sourcelink.json

@@ -104,3 +104,18 @@ getCart:
         application/json:
           schema:
             $ref: '#/schemas/CartListResponse'
+
+addCart:
+  tags:
+    - Cart
+  summary: Create cart
+  parameters:
+    - name: sodaId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK

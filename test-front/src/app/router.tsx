@@ -16,6 +16,10 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/soda-list/soda-list.page"),
             },
             {
+                path: ROUTES.CART,
+                lazy: () => import("@/features/cart/cart.page"),
+            },
+            {
                 path: ROUTES.HOME,
                 loader: () => redirect(ROUTES.SODAS),
             },

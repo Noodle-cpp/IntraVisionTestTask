@@ -17,3 +17,4 @@ D:\test\test-back\src\external\Persistence\obj\Debug\net9.0\refint\Persistence.d
 D:\test\test-back\src\external\Persistence\obj\Debug\net9.0\Persistence.pdb
 D:\test\test-back\src\external\Persistence\obj\Debug\net9.0\Persistence.genruntimeconfig.cache
 D:\test\test-back\src\external\Persistence\obj\Debug\net9.0\ref\Persistence.dll
+D:\test\test-back\src\external\Persistence\obj\Debug\net9.0\Persistence.sourcelink.json

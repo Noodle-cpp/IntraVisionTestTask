@@ -1,6 +1,7 @@
 using Api.ViewModels.Requests;
 using Api.ViewModels.Responses;
 using Application.Abstractions.Interfaces;
+using Application.Exceptions;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,22 @@ namespace Api.Controllers
             {
                 Console.WriteLine(e);
                 throw;
+            }
+        }
+
+        [HttpPost("add/sodas/{sodaId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AddSodaAsync(Guid sodaId)
+        {
+            try
+            {
+                await _cartService.CreateCartAsync(sodaId);
+                return Ok();
+            }
+            catch (SodaNotFoundException e)
+            {
+                return NotFound(e.Message);
             }
         }
     }

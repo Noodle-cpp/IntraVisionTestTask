@@ -5,42 +5,42 @@ export function DisabledButton() {
     return (
         <BaseButton onClick={() => {}}
                     className="bg-gray-200 text-black"
-                    idDisabled={true}>
+                    isDisabled={true}>
             <span>Закончился</span>
         </BaseButton>
     )
 }
 
-export function SelectedButton() {
+export function SelectedButton({onClick}:{onClick?:() => void}) {
     return (
-        <BaseButton onClick={() => console.log('Товар уже корзине')}
+        <BaseButton onClick={() => onClick}
                     className="bg-green-600 hover:bg-green-700 text-white"
-                    idDisabled={false}>
+                    isDisabled={false}>
             <span>Выбрано</span>
         </BaseButton>
     )
 }
 
-export function SelectButton() {
+export function SelectButton({onClick}:{onClick:() => void}) {
     return (
-        <BaseButton onClick={() => console.log('Товар теперь корзине')}
+        <BaseButton onClick={onClick}
                     className="bg-yellow-400 hover:bg-yellow-600 text-black"
-                    idDisabled={false}>
+                    isDisabled={false}>
             <span>Выбрать</span>
         </BaseButton>
     )
 }
 
-function BaseButton({className, onClick, children, idDisabled}: {
+function BaseButton({className, onClick, children, isDisabled}: {
     className: string,
     onClick: () => void,
     children ? : React.ReactNode,
-    idDisabled: boolean
+    isDisabled: boolean
 }) {
     return(
         <Button className={cn("w-full cursor-pointer rounded-none disabled:opacity-100", className)}
-                disabled={idDisabled}
-                onClick={() => onClick()}>
+                disabled={isDisabled}
+                onClick={onClick}>
             {children}
         </Button>
     )

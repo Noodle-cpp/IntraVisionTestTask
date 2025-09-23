@@ -1,4 +1,5 @@
 using Api.ViewModels.Requests;
+using Domain.Models;
 
 namespace Api.ViewModels.Responses;
 
@@ -7,12 +8,14 @@ public class CartResponse
     public Guid Id { get; set; }
 
     public Guid SodaId { get; set; }
+    public Soda Soda { get; set; }
 
     public int Price { get; set; }
 
     public int Count { get; set; }
 
     public Guid BrandId { get; set; }
+    public BrandResponse Brand { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

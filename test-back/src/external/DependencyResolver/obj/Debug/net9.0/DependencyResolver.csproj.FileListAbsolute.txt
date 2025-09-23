@@ -19,3 +19,4 @@ D:\test\test-back\src\external\DependencyResolver\obj\Debug\net9.0\DependencyRes
 D:\test\test-back\src\external\DependencyResolver\obj\Debug\net9.0\refint\DependencyResolver.dll
 D:\test\test-back\src\external\DependencyResolver\obj\Debug\net9.0\DependencyResolver.pdb
 D:\test\test-back\src\external\DependencyResolver\obj\Debug\net9.0\ref\DependencyResolver.dll
+D:\test\test-back\src\external\DependencyResolver\obj\Debug\net9.0\DependencyResolver.sourcelink.json

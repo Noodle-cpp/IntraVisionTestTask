@@ -27,9 +27,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["BrandResponse"][];
                         "application/json": components["schemas"]["BrandResponse"][];
-                        "text/json": components["schemas"]["BrandResponse"][];
                     };
                 };
             };
@@ -72,6 +70,42 @@ export interface paths {
         };
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/Cart/add/sodas/{sodaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create cart */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    sodaId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;

@@ -3,7 +3,7 @@ import type {ApiSchemas} from "@/shared/api/schema";
 import {DisabledButton, SelectButton, SelectedButton} from "@/features/soda-list/ui/soda-card-button.tsx";
 import {CONFIG} from "@/shared/model/config.ts";
 
-export function SodaCard({soda, isProductInCart}: {soda: ApiSchemas["SodaResponse"], isProductInCart: boolean}) {
+export function SodaCard({soda, isProductInCart, onButtonCLick}: {soda: ApiSchemas["SodaResponse"], isProductInCart: boolean, onButtonCLick: () => void}) {
     return (
         <Card className="basis-[calc(25%-15px)]
                         min-w-75
@@ -21,7 +21,7 @@ export function SodaCard({soda, isProductInCart}: {soda: ApiSchemas["SodaRespons
             </CardContent>
             <CardFooter className="w-full">
                 {isProductInCart && <SelectedButton/>}
-                {!isProductInCart && soda.count > 0 && <SelectButton/>}
+                {!isProductInCart && soda.count > 0 && <SelectButton onClick={onButtonCLick}/>}
                 {!isProductInCart && soda.count <= 0 && <DisabledButton/>}
             </CardFooter>
         </Card>
