@@ -33,6 +33,7 @@ namespace Api.Controllers
                 {
                     Carts = _mapper.Map<IEnumerable<CartResponse>>(cart.Carts),
                     Count = cart.Count,
+                    TotalPrice = cart.TotalPrice
                 };
                 return Ok(response);
             }

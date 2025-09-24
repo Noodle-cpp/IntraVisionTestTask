@@ -33,8 +33,19 @@ export function NumberInput({   min,
         }
 
         if (inputValue === "" || new RegExp(pattern).test(inputValue)) {
+            if (min !== undefined && parseInt(inputValue) < min) {
+                onChange(`${min}`)
+                return
+            }
+
+            if (max !== undefined && parseInt(inputValue) > max) {
+                onChange(`${max}`)
+                return
+            }
+
             onChange(inputValue)
         }
+
     }, [onChange, allowDecimals, allowNegative])
 
     let numValue = parseFloat(value.replace(',', '.'))
@@ -49,7 +60,6 @@ export function NumberInput({   min,
 
     const handleBlur = useCallback(() => {
         if (value) {
-            // Нормализуем значение
             const normalizedValue = value.replace(',', '.')
             if (!isNaN(parseFloat(normalizedValue))) {
                 onChange(parseFloat(normalizedValue).toString())

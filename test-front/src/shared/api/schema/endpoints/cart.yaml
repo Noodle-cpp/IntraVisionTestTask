@@ -4,12 +4,16 @@ schemas:
     required:
       - carts
       - count
+      - totalPrice
     properties:
       carts:
         type: array
         items:
           $ref: '#/schemas/CartResponse'
       count:
+        type: integer
+        format: int32
+      totalPrice:
         type: integer
         format: int32
 

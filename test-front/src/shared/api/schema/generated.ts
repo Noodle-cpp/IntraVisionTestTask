@@ -340,6 +340,8 @@ export interface components {
             carts: components["schemas"]["CartResponse"][];
             /** Format: int32 */
             count: number;
+            /** Format: int32 */
+            totalPrice: number;
         };
         UpdateCartRequest: {
             /** Format: uuid */

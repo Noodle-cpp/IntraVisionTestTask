@@ -14,7 +14,6 @@ import {useDeleteCart} from "@/features/cart/model/use-delete-cart.ts";
 export function CartPage() {
     const cartEdit = useCartEdit();
     const cartQuery = useGetCarts();
-    const totalAmount = cartQuery.carts.reduce((sum, item) => sum + (item.soda.price * item.count), 0);
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate(-1)
@@ -33,66 +32,70 @@ export function CartPage() {
         <div className="flex flex-wrap p-10">
             <div className="flex flex-col w-full">
                 <div className="flex flex-col w-full">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[45%] p-5 text-lg">Товар</TableHead>
-                                <TableHead className="w-[25%] p-5 text-lg">Количество</TableHead>
-                                <TableHead className="w-[20%] p-5 text-lg">Цена</TableHead>
-                                <TableHead className="w-[1%] p-5"></TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {cartQuery.carts.map((cart) => (
-                                <TableRow key={cart.id} className="border-0 hover:bg-transparent">
-                                    <TableCell>
-                                        <div className="flex items-center gap-4">
-                                            <img
-                                                src={`${CONFIG.API_BASE_URL}/sodas/${cart.sodaId}/img`}
-                                                loading="lazy"
-                                                className="w-50 h-50 object-contain"
-                                                alt={cart.sodaName}
-                                            />
-                                            <span className="text-xl">{cart.sodaName}</span>
-                                        </div>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <div className="flex items-center gap-2">
-                                            <NumberInput
-                                                value={cartEdit.getInputCount(cart.id) || `${cart.count}`}
-                                                onChange={(value) => {
-                                                    cartEdit.setInputCount(cart.id, value);
-                                                    updateQuanity(cart.id, cart, value);
-                                                }}
-                                                min={1}
-                                                allowDecimals={false}
-                                                max={cart.soda.count}
-                                            />
-                                        </div>
-                                    </TableCell>
-
-                                    <TableCell>
-                                       <span className="font-semibold text-2xl">
-                                            {cart.soda.price * cart.count} руб.
-                                        </span>
-                                    </TableCell>
-
-                                    <TableCell className="text-right">
-                                        <Trash2Icon className="h-10 w-10" onClick={() => deleteCart(cart.id)}/>
-                                    </TableCell>
+                    {cartQuery.carts.length > 0 &&
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[45%] p-5 text-lg">Товар</TableHead>
+                                    <TableHead className="w-[25%] p-5 text-lg">Количество</TableHead>
+                                    <TableHead className="w-[20%] p-5 text-lg">Цена</TableHead>
+                                    <TableHead className="w-[1%] p-5"></TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {cartQuery.carts.map((cart) => (
+                                    <TableRow key={cart.id} className="border-0 hover:bg-transparent">
+                                        <TableCell>
+                                            <div className="flex items-center gap-4">
+                                                <img
+                                                    src={`${CONFIG.API_BASE_URL}/sodas/${cart.sodaId}/img`}
+                                                    loading="lazy"
+                                                    className="w-50 h-50 object-contain"
+                                                    alt={cart.sodaName}
+                                                />
+                                                <span className="text-xl">{cart.sodaName}</span>
+                                            </div>
+                                        </TableCell>
+
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                <NumberInput
+                                                    value={cartEdit.getInputCount(cart.id) || `${cart.count}`}
+                                                    onChange={(value) => {
+                                                        cartEdit.setInputCount(cart.id, value);
+                                                        updateQuanity(cart.id, cart, value);
+                                                    }}
+                                                    min={1}
+                                                    allowDecimals={false}
+                                                    max={cart.soda.count}
+                                                />
+                                            </div>
+                                        </TableCell>
+
+                                        <TableCell>
+                                           <span className="font-semibold text-2xl">
+                                                {cart.soda.price * cart.count} руб.
+                                            </span>
+                                        </TableCell>
+
+                                        <TableCell className="text-right">
+                                            <Trash2Icon className="h-10 w-10" onClick={() => deleteCart(cart.id)}/>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    }
                 </div>
 
                 <Separator/>
 
+                {cartQuery.carts.length === 0 && <span className="w-full text-center p-10">У вас нет ни одного товара, вернитесь на страницу каталога</span>}
+
                 <div className="flex flex-col w-full gap-10 pt-10">
                     <div className="flex flex-row items-center justify-end gap-5">
                         <span className="text-2xl">Итоговая сумма</span>
-                        <span className="text-4xl font-bold">{totalAmount}</span>
+                        <span className="text-4xl font-bold">{cartQuery.totalPrice}</span>
                     </div>
                     <div className="flex flex-row justify-between">
                         <Button className="bg-yellow-400 hover:bg-yellow-600 text-black text-xl rounded-none h-18 w-[20%]"
@@ -100,7 +103,8 @@ export function CartPage() {
                             Вернуться
                         </Button>
 
-                        <Button className="bg-green-600 hover:bg-green-700 text-white text-xl rounded-none h-18 w-[20%]">
+                        <Button className="bg-green-600 hover:bg-green-700 text-white text-xl rounded-none h-18 w-[20%]"
+                                disabled={cartQuery.carts.length === 0}>
                             Оплата
                         </Button>
                     </div>

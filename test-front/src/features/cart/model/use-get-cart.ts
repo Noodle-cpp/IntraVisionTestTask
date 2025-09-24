@@ -6,8 +6,10 @@ export function useGetCarts() {
     }, {refetchOnWindowFocus: false}));
 
     const carts = cartsQuery.data?.carts ?? [];
+    const totalPrice = cartsQuery.data?.totalPrice || 0;
 
     return {
         carts,
+        totalPrice
     }
 }

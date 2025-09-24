@@ -23,7 +23,8 @@ public class CartService : ICartService
         return new CartResponseViewModel()
         {
             Carts = carts,
-            Count = carts.Count()
+            Count = carts.Count(),
+            TotalPrice = carts.Sum(c => (c.Price * c.Count))
         };
     }
 

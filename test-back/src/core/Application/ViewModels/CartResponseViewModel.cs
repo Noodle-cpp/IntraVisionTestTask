@@ -6,4 +6,5 @@ public class CartResponseViewModel
 {
     public IEnumerable<Cart> Carts { get; set; }
     public int Count { get; set; }
+    public int TotalPrice { get; set; }
 }
