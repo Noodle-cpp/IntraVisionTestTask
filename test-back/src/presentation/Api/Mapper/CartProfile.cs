@@ -1,3 +1,4 @@
+using Api.ViewModels.Requests;
 using Api.ViewModels.Responses;
 using AutoMapper;
 using Domain.Models;
@@ -9,5 +10,6 @@ public class CartProfile : Profile
     public CartProfile()
     {
         CreateMap<Cart, CartResponse>();
+        CreateMap<UpdateCartRequest, Cart>();
     }
 }

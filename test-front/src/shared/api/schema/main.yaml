@@ -15,6 +15,9 @@ paths:
   /Cart/add/sodas/{sodaId}:
     post:
       $ref: "./endpoints/cart.yaml#/addCart"
+  /Cart/{cartId}:
+    put:
+      $ref: "./endpoints/cart.yaml#/updateCart"
   /Sodas:
     get:
       $ref: "./endpoints/soda.yaml#/getAllSodas"

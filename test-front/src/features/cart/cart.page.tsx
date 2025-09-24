@@ -1,18 +1,30 @@
 import {CONFIG} from "@/shared/model/config.ts";
 import {useGetCarts} from "@/features/cart/model/use-get-cart"
-import {MinusIcon, PlusIcon, Trash2Icon} from "lucide-react";
+import {Trash2Icon} from "lucide-react";
 import {Separator} from "@/shared/ui/kit/separator";
 import {Button} from "@/shared/ui/kit/button";
-import {Input} from "@/shared/ui/kit/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/kit/table";
 import {useNavigate} from "react-router-dom";
+import type {ApiSchemas} from "@/shared/api/schema";
+import {useUpdateCart} from "@/features/cart/model/use-put-cart.ts";
+import {useCartEdit} from "@/features/cart/model/use-cart-edit";
+import {NumberInput} from "@/features/cart/ui/number-input.tsx";
 
 export function CartPage() {
+    const cartEdit = useCartEdit();
     const cartQuery = useGetCarts();
     const totalAmount = cartQuery.carts.reduce((sum, item) => sum + (item.soda.price * item.count), 0);
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate(-1)
+    }
+
+    const {updateCart} = useUpdateCart();
+
+    const updateQuanity = (cartId: string, cart: ApiSchemas["UpdateCartRequest"], inputValue: string) => {
+        cartEdit.setInputCount(cartId, inputValue)
+        cart.count = parseInt(inputValue) || 0
+        updateCart(cartId, cart)
     }
 
     return (
@@ -45,25 +57,16 @@ export function CartPage() {
 
                                     <TableCell>
                                         <div className="flex items-center gap-2">
-                                            <Button
-                                                variant="secondary"
-                                                size="icon"
-                                                className="size-8 bg-black text-white hover:bg-gray-800"
-                                            >
-                                                <MinusIcon className="h-4 w-4"/>
-                                            </Button>
-                                            <Input
-                                                value={cart.count}
-                                                className="w-16 text-center"
-                                                readOnly
+                                            <NumberInput
+                                                value={cartEdit.getInputCount(cart.id) || `${cart.count}`}
+                                                onChange={(value) => {
+                                                    cartEdit.setInputCount(cart.id, value);
+                                                    updateQuanity(cart.id, cart, value);
+                                                }}
+                                                min={1}
+                                                allowDecimals={false}
+                                                max={cart.soda.count}
                                             />
-                                            <Button
-                                                variant="secondary"
-                                                size="icon"
-                                                className="size-8 bg-black text-white hover:bg-gray-800"
-                                            >
-                                                <PlusIcon className="h-4 w-4"/>
-                                            </Button>
                                         </div>
                                     </TableCell>
 

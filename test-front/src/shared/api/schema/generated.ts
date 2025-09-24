@@ -112,6 +112,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/Cart/{cartId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update cart */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cartId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UpdateCartRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/Sodas": {
         parameters: {
             query?: never;
@@ -280,6 +320,20 @@ export interface components {
             carts: components["schemas"]["CartResponse"][];
             /** Format: int32 */
             count: number;
+        };
+        UpdateCartRequest: {
+            /** Format: uuid */
+            sodaId?: string;
+            /** Format: int32 */
+            price?: number;
+            /** Format: int32 */
+            count?: number;
+            /** Format: uuid */
+            brandId?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            sodaName?: string;
+            brandName?: string;
         };
         PaginationResponseOfSodaResponse: {
             list: components["schemas"]["SodaResponse"][];

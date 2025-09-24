@@ -13,6 +13,29 @@ schemas:
         type: integer
         format: int32
 
+  UpdateCartRequest:
+    type: object
+    properties:
+      sodaId:
+        type: string
+        format: uuid
+      price:
+        type: integer
+        format: int32
+      count:
+        type: integer
+        format: int32
+      brandId:
+        type: string
+        format: uuid
+      createdAt:
+        type: string
+        format: date-time
+      sodaName:
+        type: string
+      brandName:
+        type: string
+
   CartResponse:
     type: object
     required:
@@ -116,6 +139,26 @@ addCart:
       schema:
         type: string
         format: uuid
+  responses:
+    '200':
+      description: OK
+updateCart:
+  tags:
+    - Cart
+  summary: Update cart
+  parameters:
+    - name: cartId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/UpdateCartRequest"
+    required: true
   responses:
     '200':
       description: OK

@@ -45,4 +45,24 @@ public class CartService : ICartService
         
         await _cartRepository.CreateCartAsync(cart).ConfigureAwait(false);
     }
+
+    public async Task UpdateCartAsync(Guid cartId, Cart updatedCart)
+    {
+        var cart = await _cartRepository.GetCartByIdAsync(cartId).ConfigureAwait(false) ?? throw new CartNotFoundException(nameof(cartId));
+        
+        cart.SodaId = updatedCart.SodaId;
+        cart.Price = updatedCart.Price;
+        cart.Count = updatedCart.Count;
+        cart.BrandId = updatedCart.BrandId;
+        cart.CreatedAt = updatedCart.CreatedAt;
+        cart.SodaName = updatedCart.SodaName;
+        
+        await _cartRepository.UpdateCartAsync(cart).ConfigureAwait(false);
+    }
+
+    public async Task DeleteCartByIdAsync(Guid cartId)
+    {
+        var cart = await _cartRepository.GetCartByIdAsync(cartId).ConfigureAwait(false) ?? throw new CartNotFoundException(nameof(cartId));
+        await _cartRepository.DeleteCartAsync(cart).ConfigureAwait(false);
+    }
 }

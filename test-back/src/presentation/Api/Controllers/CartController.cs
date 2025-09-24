@@ -3,6 +3,7 @@ using Api.ViewModels.Responses;
 using Application.Abstractions.Interfaces;
 using Application.Exceptions;
 using AutoMapper;
+using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +54,39 @@ namespace Api.Controllers
                 return Ok();
             }
             catch (SodaNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPut("{cartId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateCartAsync(Guid cartId, [FromBody] UpdateCartRequest request)
+        {
+            try
+            {
+                var updatedCart = _mapper.Map<Cart>(request);
+                await _cartService.UpdateCartAsync(cartId, updatedCart).ConfigureAwait(false);
+                return Ok();
+            }
+            catch (CartNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpDelete("{cartId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteCartAsync(Guid cartId)
+        {
+            try
+            {
+                await _cartService.DeleteCartByIdAsync(cartId).ConfigureAwait(false);
+                return Ok();
+            }
+            catch (CartNotFoundException e)
             {
                 return NotFound(e.Message);
             }
