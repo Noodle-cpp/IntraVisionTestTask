@@ -84,6 +84,9 @@ namespace Persistence.Migrations
                     b.Property<int>("Banknote")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Coins");

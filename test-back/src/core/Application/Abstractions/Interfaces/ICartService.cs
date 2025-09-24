@@ -9,4 +9,5 @@ public interface ICartService
     public Task CreateCartAsync(Guid sodaId);
     public Task UpdateCartAsync(Guid cartId, Cart updatedCart);
     public Task DeleteCartByIdAsync(Guid cartId);
+    public Task<int> BuyCartAsync(IEnumerable<Coin> coins);
 }

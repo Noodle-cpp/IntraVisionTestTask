@@ -10,4 +10,5 @@ public interface ISodaRepository
     public Task<int> GetTotalSodasCountAsync(int minPrice, int maxPrice, Guid? brandId = null);
     public Task<int> GetTotalCountAsync(int minPrice, int maxPrice, Guid? brandId = null);
     public Task<Soda?> GetSodaByIdAsync(Guid sodaId);
+    public Task UpdateSodaAsync(Soda soda);
 }

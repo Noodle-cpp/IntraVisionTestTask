@@ -4,12 +4,13 @@ import {Trash2Icon} from "lucide-react";
 import {Separator} from "@/shared/ui/kit/separator";
 import {Button} from "@/shared/ui/kit/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/kit/table";
-import {useNavigate} from "react-router-dom";
+import {href, Link, useNavigate} from "react-router-dom";
 import type {ApiSchemas} from "@/shared/api/schema";
 import {useUpdateCart} from "@/features/cart/model/use-put-cart.ts";
 import {useCartEdit} from "@/features/cart/model/use-cart-edit";
-import {NumberInput} from "@/features/cart/ui/number-input.tsx";
+import {NumberInput} from "@/shared/ui/number-input/number-input.tsx";
 import {useDeleteCart} from "@/features/cart/model/use-delete-cart.ts";
+import {ROUTES} from "@/shared/model/routes.ts";
 
 export function CartPage() {
     const cartEdit = useCartEdit();
@@ -30,7 +31,10 @@ export function CartPage() {
 
     return (
         <div className="flex flex-wrap p-10">
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full gap-10">
+                <span className="font-semibold text-3xl">
+                    Оформление заказа
+                </span>
                 <div className="flex flex-col w-full">
                     {cartQuery.carts.length > 0 &&
                         <Table>
@@ -92,7 +96,7 @@ export function CartPage() {
 
                 {cartQuery.carts.length === 0 && <span className="w-full text-center p-10">У вас нет ни одного товара, вернитесь на страницу каталога</span>}
 
-                <div className="flex flex-col w-full gap-10 pt-10">
+                <div className="flex flex-col w-full gap-10">
                     <div className="flex flex-row items-center justify-end gap-5">
                         <span className="text-2xl">Итоговая сумма</span>
                         <span className="text-4xl font-bold">{cartQuery.totalPrice}</span>
@@ -104,8 +108,12 @@ export function CartPage() {
                         </Button>
 
                         <Button className="bg-green-600 hover:bg-green-700 text-white text-xl rounded-none h-18 w-[20%]"
-                                disabled={cartQuery.carts.length === 0}>
-                            Оплата
+                                asChild>
+                            {cartQuery.carts.length !== 0 &&
+                            <Link key="payment" to={href(ROUTES.PAYMENT)}>
+                                Оплата
+                            </Link>
+                            }
                         </Button>
                     </div>
                 </div>

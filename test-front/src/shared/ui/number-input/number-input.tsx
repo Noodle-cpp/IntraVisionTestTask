@@ -1,4 +1,4 @@
-import { Input } from "@/shared/ui/kit/input"
+import { Input } from "@/shared/ui/kit/input.tsx"
 import {useCallback} from "react"
 import {Minus, Plus} from "lucide-react";
 import {Button} from "@/shared/ui/kit/button.tsx";
@@ -87,8 +87,8 @@ export function NumberInput({   min,
 
     return (
         <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" onClick={decrement}>
-                <Minus className="h-4 w-4"/>
+            <Button size="icon" onClick={decrement} className="bg-black rounded-none hover:bg-gray-900">
+                <Minus className="h-4 w-4 text-white"/>
             </Button>
 
             <Input
@@ -99,8 +99,8 @@ export function NumberInput({   min,
                 onBlur={handleBlur}
                 className="text-center"
             />
-            <Button variant="outline" size="icon" onClick={increment}>
-                <Plus className="h-4 w-4"/>
+            <Button variant="outline" size="icon" onClick={increment} className="bg-black rounded-none hover:bg-gray-900">
+                <Plus className="h-4 w-4 text-white"/>
             </Button>
         </div>
     )

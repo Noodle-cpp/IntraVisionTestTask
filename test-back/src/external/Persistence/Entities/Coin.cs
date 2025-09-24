@@ -9,4 +9,7 @@ public class Coin
     
     [Required]
     public int Banknote { get; set; }
+    
+    [Required]
+    public int Count { get; set; }
 }

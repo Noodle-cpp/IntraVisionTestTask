@@ -1,0 +1,50 @@
+schemas:
+  CoinRequest:
+    type: object
+    required:
+      - id
+      - count
+    properties:
+      id:
+        type: string
+        format: uuid
+      count:
+        type: integer
+        format: int32
+
+  CoinResponse:
+    type: object
+    required:
+      - id
+      - banknote
+      - count
+    properties:
+      id:
+        type: string
+        format: uuid
+      banknote:
+        type: integer
+        format: int32
+      count:
+        type: integer
+        format: int32
+
+getCoins:
+  tags:
+    - Coin
+  summary: Get coins
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/schemas/CoinResponse"
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../shared/responses.yaml#/ErrorResponse"

@@ -92,5 +92,26 @@ namespace Api.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        [HttpPut("buy")]
+        [ProducesResponseType(typeof(PaymentResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> BuyCartAsync([FromBody] PaymentRequest request)
+        {
+            try
+            {
+                var coins = _mapper.Map<IEnumerable<Coin>>(request.Coins);
+                var changeOfMoney = await _cartService.BuyCartAsync(coins).ConfigureAwait(false);
+                
+                return Ok(new PaymentResponse()
+                {
+                    ChangeOfMoney = changeOfMoney,
+                });
+            }
+            catch (InsufficientFundsException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

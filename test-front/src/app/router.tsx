@@ -20,6 +20,10 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/cart/cart.page"),
             },
             {
+                path: ROUTES.PAYMENT,
+                lazy: () => import("@/features/payment/payment.page"),
+            },
+            {
                 path: ROUTES.HOME,
                 loader: () => redirect(ROUTES.SODAS),
             },

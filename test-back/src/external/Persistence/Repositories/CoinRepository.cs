@@ -16,11 +16,23 @@ public class CoinRepository : ICoinRepository
 
     public async Task<IEnumerable<Coin>> GetAllCoinsAsync()
     {
-        var coins = await _context.Coins.AsNoTracking().ToListAsync().ConfigureAwait(false);
+        var coins = await _context.Coins.AsNoTracking().OrderBy(c => c.Banknote).ToListAsync().ConfigureAwait(false);
         return coins.Select((c => new Coin()
         {
             Id = c.Id,
             Banknote = c.Banknote,
+            Count = c.Count
         }));
+    }
+
+    public async Task<Coin?> GetCoinByIdAsync(Guid coinId)
+    {
+        var coin = await _context.Coins.AsNoTracking().FirstOrDefaultAsync(c => c.Id == coinId).ConfigureAwait(false);
+        return coin is null ? null : new Coin()
+        {
+            Id = coin.Id,
+            Banknote = coin.Banknote,
+            Count = coin.Count
+        };
     }
 }

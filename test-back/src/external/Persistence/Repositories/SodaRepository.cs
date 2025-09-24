@@ -89,4 +89,20 @@ public class SodaRepository : ISodaRepository
             .Where(s => ((brandId != null && s.BrandId == brandId) || brandId == null) && (minPrice <= s.Price && s.Price <= maxPrice))
             .CountAsync().ConfigureAwait(false);
     }
+
+    public async Task UpdateSodaAsync(Soda soda)
+    {
+        var updatedSoda = new Entities.Soda()
+        {
+            Id = soda.Id,
+            Name = soda.Name,
+            ImgPath = soda.ImgPath,
+            Price = soda.Price,
+            Count = soda.Count,
+            BrandId = soda.BrandId
+        };
+        
+        _context.Sodas.Update(updatedSoda);
+        await _context.SaveChangesAsync().ConfigureAwait(false);
+    }
 }

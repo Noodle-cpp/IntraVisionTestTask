@@ -13,6 +13,7 @@ public static class AddApplicationServiceRegistration
         services.AddScoped<IBrandService, BrandService>();
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<ISodaService, SodaService>();
+        services.AddScoped<ICoinService, CoinService>();
         
         return services;
     }

@@ -12,6 +12,9 @@ paths:
   /Cart:
     get:
       $ref: "./endpoints/cart.yaml#/getCart"
+  /Cart/buy:
+    put:
+      $ref: "./endpoints/cart.yaml#/buyCart"
   /Cart/add/sodas/{sodaId}:
     post:
       $ref: "./endpoints/cart.yaml#/addCart"
@@ -29,3 +32,6 @@ paths:
   /{sodaId}/img:
     get:
       $ref: "./endpoints/soda.yaml#/getSodaImage"
+  /Coins:
+    get:
+      $ref: "./endpoints/coin.yaml#/getCoins"

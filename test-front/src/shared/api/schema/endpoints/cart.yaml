@@ -17,6 +17,21 @@ schemas:
         type: integer
         format: int32
 
+  PaymentRequest:
+    type: object
+    properties:
+      coins:
+        type: array
+        items:
+          $ref: "./coin.yaml#/schemas/CoinRequest"
+
+  PaymentResponse:
+    type: object
+    properties:
+      changeOfMoney:
+        type: integer
+        format: int32
+
   UpdateCartRequest:
     type: object
     properties:
@@ -180,3 +195,25 @@ deleteCart:
   responses:
     '200':
       description: OK
+buyCart:
+  tags:
+    - Cart
+  summary: Buy cart
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/UpdateCartRequest"
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/PaymentResponse"
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../shared/responses.yaml#/ErrorResponse"
