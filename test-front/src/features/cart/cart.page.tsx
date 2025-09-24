@@ -9,6 +9,7 @@ import type {ApiSchemas} from "@/shared/api/schema";
 import {useUpdateCart} from "@/features/cart/model/use-put-cart.ts";
 import {useCartEdit} from "@/features/cart/model/use-cart-edit";
 import {NumberInput} from "@/features/cart/ui/number-input.tsx";
+import {useDeleteCart} from "@/features/cart/model/use-delete-cart.ts";
 
 export function CartPage() {
     const cartEdit = useCartEdit();
@@ -20,6 +21,7 @@ export function CartPage() {
     }
 
     const {updateCart} = useUpdateCart();
+    const {deleteCart} = useDeleteCart();
 
     const updateQuanity = (cartId: string, cart: ApiSchemas["UpdateCartRequest"], inputValue: string) => {
         cartEdit.setInputCount(cartId, inputValue)
@@ -77,7 +79,7 @@ export function CartPage() {
                                     </TableCell>
 
                                     <TableCell className="text-right">
-                                        <Trash2Icon className="h-10 w-10"/>
+                                        <Trash2Icon className="h-10 w-10" onClick={() => deleteCart(cart.id)}/>
                                     </TableCell>
                                 </TableRow>
                             ))}

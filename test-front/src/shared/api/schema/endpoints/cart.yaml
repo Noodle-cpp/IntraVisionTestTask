@@ -162,3 +162,17 @@ updateCart:
   responses:
     '200':
       description: OK
+deleteCart:
+  tags:
+    - Cart
+  summary: Delete cart
+  parameters:
+    - name: cartId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK

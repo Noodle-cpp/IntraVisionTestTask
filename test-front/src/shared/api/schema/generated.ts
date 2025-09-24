@@ -146,7 +146,27 @@ export interface paths {
             };
         };
         post?: never;
-        delete?: never;
+        /** Delete cart */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cartId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         options?: never;
         head?: never;
         patch?: never;

@@ -18,6 +18,8 @@ paths:
   /Cart/{cartId}:
     put:
       $ref: "./endpoints/cart.yaml#/updateCart"
+    delete:
+      $ref: "./endpoints/cart.yaml#/deleteCart"
   /Sodas:
     get:
       $ref: "./endpoints/soda.yaml#/getAllSodas"
