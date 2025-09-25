@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DependencyResolver")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+877ddb3af159d9b37f8b72a65e4007e6954cd0b9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d0c888f9dc505143af0ba78cb6fc702507d707e")]
 [assembly: System.Reflection.AssemblyProductAttribute("DependencyResolver")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DependencyResolver")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

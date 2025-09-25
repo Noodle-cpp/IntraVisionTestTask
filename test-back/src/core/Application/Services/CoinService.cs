@@ -28,8 +28,6 @@ public class CoinService : ICoinService
         var sortedCoins = coins.OrderByDescending(x => x.Banknote).ToList();
         foreach (var coin in sortedCoins)
         {
-            if (amount == 0) break;
-            
             var neededCount = amount / coin.Banknote;
             var actualAmount = amount - (neededCount * coin.Banknote);
             if (actualAmount < 0) continue;
