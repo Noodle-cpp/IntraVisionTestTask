@@ -55,6 +55,7 @@ public class CoinService : ICoinService
         {
             dbCoin.Count += coins.FirstOrDefault(x => x.Id == dbCoin.Id)?.Count ?? 0;
             dbCoin.Count -= change.FirstOrDefault(x => x.Id == dbCoin.Id)?.Count ?? 0;
+            if (dbCoin.Count < 0) throw new InsufficientFundsException();
             
             await _coinRepository.UpdateCoinAsync(dbCoin).ConfigureAwait(false);
         }

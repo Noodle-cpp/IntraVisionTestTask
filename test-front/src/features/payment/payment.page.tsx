@@ -25,10 +25,8 @@ export function PaymentPage() {
     const handlePayment = () => {
 
         const totalAmount = coinEdit.calculateTotalAmount(coinsQuery.coins);
+        console.log(totalAmount);
         if (totalAmount < cartQuery.totalPrice) return;
-
-        const changeAmount = totalAmount - cartQuery.totalPrice;
-        if (changeAmount === 0) return;
 
         const paymentData: ApiSchemas["PaymentRequest"] = {
             coins: coinsQuery.coins.map(coin => ({
@@ -68,7 +66,7 @@ export function PaymentPage() {
                             Ваши монеты:
                         </span>
                         {buy.responseData.map((change) =>
-                            <div className="flex items-center gap-10">
+                            <div key={change.id} className="flex items-center gap-10">
                                 <div className="rounded-full bg-gray-100 border-l border-gray-300
                                                                     text-black flex items-center justify-center
                                                                     w-15 h-15 text-xl">
@@ -107,7 +105,7 @@ export function PaymentPage() {
                     </div>
                 }
                 {
-                    buy.responseData.length === 0 &&
+                    buy.responseData.length === 0 && !buy.isError &&
                     <div>
                 <span className="font-semibold text-3xl">
                     Оплата

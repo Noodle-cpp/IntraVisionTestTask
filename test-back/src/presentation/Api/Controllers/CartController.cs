@@ -112,11 +112,19 @@ namespace Api.Controllers
 
                 transaction.Complete();
 
-                return Ok(_mapper.Map<IEnumerable<CoinResponse>>(changeCoin));
+                return Ok(_mapper.Map<IEnumerable<CoinResponse>>(changeCoin.OrderBy(c => c.Banknote)));
             }
             catch (InsufficientFundsException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (InsufficientSodaException e)
+            {
+                return UnprocessableEntity(e.Message);
+            }
+            catch (CoinNotFoundException e)
+            {
+                return UnprocessableEntity(e.Message);
             }
         }
     }
