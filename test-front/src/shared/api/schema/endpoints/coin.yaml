@@ -48,3 +48,34 @@ getCoins:
         application/json:
           schema:
             $ref: "../shared/responses.yaml#/ErrorResponse"
+
+getChange:
+  tags:
+    - Coins
+  parameters:
+    - name: amount
+      in: query
+      schema:
+        type: integer
+        format: int32
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/schemas/CoinResponse"
+    "422":
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../shared/responses.yaml#/ErrorResponse"
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../shared/responses.yaml#/ErrorResponse"

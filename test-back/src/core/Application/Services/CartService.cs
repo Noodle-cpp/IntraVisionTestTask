@@ -79,13 +79,12 @@ public class CartService : ICartService
         foreach (var coin in coins)
         {
             var dbCoin = await _coinRepository.GetCoinByIdAsync(coin.Id).ConfigureAwait(false);
-            if(dbCoin is not null) totalCoins += dbCoin.Count * dbCoin.Banknote;
+            if (dbCoin is null) continue;
+            totalCoins += coin.Count * dbCoin.Banknote;
         }
 
         if (totalCartPrice > totalCoins) throw new InsufficientFundsException();
 
-        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        
         foreach (var cart in carts)
         {
             var soda = await _sodaRepository.GetSodaByIdAsync(cart.SodaId).ConfigureAwait(false);
@@ -93,8 +92,6 @@ public class CartService : ICartService
             await _sodaRepository.UpdateSodaAsync(soda).ConfigureAwait(false);
             await _cartRepository.DeleteCartAsync(cart).ConfigureAwait(false);
         }
-        
-        transaction.Complete();
         
         return totalCoins - totalCartPrice;
     }

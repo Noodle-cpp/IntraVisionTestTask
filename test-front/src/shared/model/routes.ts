@@ -5,4 +5,6 @@ export const ROUTES = {
     SODAS: "/sodas",
     CART: "/cart",
     PAYMENT: "/payment",
+    CHECK: "/check",
+    PAYMENT_EXCEPTION: "/payment/exception",
 } as const;

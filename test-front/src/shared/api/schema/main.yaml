@@ -35,3 +35,6 @@ paths:
   /Coins:
     get:
       $ref: "./endpoints/coin.yaml#/getCoins"
+  /Coins/change:
+    get:
+      $ref: "./endpoints/coin.yaml#/getChange"

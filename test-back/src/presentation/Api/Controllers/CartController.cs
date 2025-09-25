@@ -1,3 +1,4 @@
+using System.Transactions;
 using Api.ViewModels.Requests;
 using Api.ViewModels.Responses;
 using Application.Abstractions.Interfaces;
@@ -14,12 +15,14 @@ namespace Api.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
+        private readonly ICoinService _coinService;
         private readonly IMapper _mapper;
 
-        public CartController(ICartService cartService, IMapper mapper)
+        public CartController(ICartService cartService, IMapper mapper, ICoinService coinService)
         {
             _cartService = cartService;
             _mapper = mapper;
+            _coinService = coinService;
         }
 
         [HttpGet]
@@ -94,19 +97,22 @@ namespace Api.Controllers
         }
 
         [HttpPut("buy")]
-        [ProducesResponseType(typeof(PaymentResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<CoinResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> BuyCartAsync([FromBody] PaymentRequest request)
         {
             try
             {
-                var coins = _mapper.Map<IEnumerable<Coin>>(request.Coins);
-                var changeOfMoney = await _cartService.BuyCartAsync(coins).ConfigureAwait(false);
+                using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
                 
-                return Ok(new PaymentResponse()
-                {
-                    ChangeOfMoney = changeOfMoney,
-                });
+                var coins = _mapper.Map<IEnumerable<Coin>>(request.Coins);
+                var change = await _cartService.BuyCartAsync(coins).ConfigureAwait(false);
+                var changeCoin = await _coinService.ChangeOfCoinAsync(change).ConfigureAwait(false); 
+                await _coinService.CountNewBalanceAsync(changeCoin, coins).ConfigureAwait(false);
+
+                transaction.Complete();
+
+                return Ok(_mapper.Map<IEnumerable<CoinResponse>>(changeCoin));
             }
             catch (InsufficientFundsException e)
             {

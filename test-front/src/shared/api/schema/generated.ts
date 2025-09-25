@@ -94,7 +94,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["UpdateCartRequest"];
+                    "application/json": components["schemas"]["PaymentRequest"];
                 };
             };
             responses: {
@@ -104,7 +104,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["PaymentResponse"];
+                        "application/json": components["schemas"]["CoinResponse"][];
                     };
                 };
                 /** @description Bad Request */
@@ -391,6 +391,61 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/Coins/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    amount?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CoinResponse"][];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Unprocessable Entity */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -437,6 +492,25 @@ export interface components {
             /** Format: int32 */
             totalPrice: number;
         };
+        CoinRequest: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            count: number;
+        };
+        PaymentRequest: {
+            coins: components["schemas"]["CoinRequest"][];
+        };
+        CoinResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: int32 */
+            banknote: number;
+            /** Format: int32 */
+            count: number;
+        };
+        /** @description Resource not found */
+        ErrorResponse: unknown;
         UpdateCartRequest: {
             /** Format: uuid */
             sodaId?: string;
@@ -451,12 +525,6 @@ export interface components {
             sodaName?: string;
             brandName?: string;
         };
-        PaymentResponse: {
-            /** Format: int32 */
-            changeOfMoney?: number;
-        };
-        /** @description Resource not found */
-        ErrorResponse: unknown;
         PaginationResponseOfSodaResponse: {
             list: components["schemas"]["SodaResponse"][];
             /** Format: int32 */
@@ -496,14 +564,6 @@ export interface components {
         Error: {
             message: string;
             code: string;
-        };
-        CoinResponse: {
-            /** Format: uuid */
-            id: string;
-            /** Format: int32 */
-            banknote: number;
-            /** Format: int32 */
-            count: number;
         };
     };
     responses: {

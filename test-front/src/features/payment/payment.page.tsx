@@ -7,6 +7,9 @@ import {useGetCoins} from "@/features/payment/model/use-get-coin.ts";
 import {useCoinEdit} from "@/features/payment/model/use-coin-edit.ts";
 import {useGetCarts} from "@/features/payment/model/use-get-cart.ts";
 import {cn} from "@/shared/lib/css.ts";
+import {useBuy} from "@/features/payment/model/use-buy.ts";
+import type {ApiSchemas} from "@/shared/api/schema";
+import {ROUTES} from "@/shared/model/routes.ts";
 
 export function PaymentPage() {
     const coinsQuery = useGetCoins();
@@ -16,6 +19,43 @@ export function PaymentPage() {
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate(-1)
+    }
+    const buy = useBuy()
+
+    const handlePayment = async () => {
+
+        const totalAmount = coinEdit.calculateTotalAmount(coinsQuery.coins);
+        if (totalAmount < cartQuery.totalPrice) return;
+
+        const changeAmount = totalAmount - cartQuery.totalPrice;
+        if (changeAmount === 0) return;
+
+        const paymentData: ApiSchemas["PaymentRequest"] = {
+            coins: coinsQuery.coins.map(coin => ({
+                id: coin.id,
+                count: parseInt(coinEdit.getInputCount(coin.id) || "0")
+            })).filter(coin => coin.count > 0)
+        };
+
+        try {
+            await buy.buy(paymentData);
+            console.log('Покупка совершена успешно');
+        } catch {
+            navigate(ROUTES.PAYMENT_EXCEPTION, {
+                state: {
+                    message: "Автомат не может выдать сдачу"
+                }
+            });
+            console.log('Автомат не может выдать сдачу');
+            return;
+        }
+
+        console.log(buy.changeCoins)
+        // navigate(ROUTES.CHECK, {
+        //     state: {
+        //         changeCoins: buy.changeCoins,
+        //     }
+        // });
     }
 
     return(
@@ -90,7 +130,8 @@ export function PaymentPage() {
                             Вернуться
                         </Button>
 
-                        <Button className="bg-green-600 hover:bg-green-700 text-white text-xl rounded-none h-18 w-[20%]">
+                        <Button className="bg-green-600 hover:bg-green-700 text-white text-xl rounded-none h-18 w-[20%]"
+                                onClick={handlePayment}>
                             Оплатить
                         </Button>
                     </div>

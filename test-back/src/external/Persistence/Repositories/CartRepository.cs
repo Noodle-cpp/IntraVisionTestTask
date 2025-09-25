@@ -18,8 +18,8 @@ public class CartRepository : ICartRepository
     public async Task<IEnumerable<Cart>> GetCartAsync()
     {
         var carts = await _context.Carts.AsNoTracking()
-            .Include(c => c.Brand)
-            .Include(c => c.Soda).ToListAsync().ConfigureAwait(false);
+            .Include(c => c.Brand).AsNoTracking()
+            .Include(c => c.Soda).AsNoTracking().ToListAsync().ConfigureAwait(false);
         return carts.Select(c => new Cart()
         {
             Id = c.Id,
@@ -85,8 +85,8 @@ public class CartRepository : ICartRepository
     public async Task<Cart?> GetCartByIdAsync(Guid cartId)
     {
         var cart = await _context.Carts.AsNoTracking()
-            .Include(c => c.Brand)
-            .Include(c => c.Soda)
+            .Include(c => c.Brand).AsNoTracking()
+            .Include(c => c.Soda).AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == cartId).ConfigureAwait(false);
         
         return cart is null ? null : new Cart()

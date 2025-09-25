@@ -40,7 +40,7 @@ public class SodaRepository : ISodaRepository
 
     public async Task<int> GetTotalCountAsync(int minPrice, int maxPrice, Guid? brandId = null)
     {
-        var count = await _context.Sodas.AsNoTracking().AsNoTracking()
+        var count = await _context.Sodas.AsNoTracking()
             .Where(s => (s.BrandId == brandId || brandId == null) && (minPrice <= s.Price && s.Price <= maxPrice))
             .CountAsync().ConfigureAwait(false);
         
@@ -49,7 +49,7 @@ public class SodaRepository : ISodaRepository
 
     public async Task<Soda?> GetSodaByIdAsync(Guid sodaId)
     {
-        var soda = await _context.Sodas.Include(s => s.Brand)
+        var soda = await _context.Sodas.AsNoTracking().Include(s => s.Brand)
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == sodaId).ConfigureAwait(false);
         

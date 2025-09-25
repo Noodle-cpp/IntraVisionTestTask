@@ -1,5 +1,6 @@
 using Api.ViewModels.Responses;
 using Application.Abstractions.Interfaces;
+using Application.Exceptions;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,28 @@ namespace Api.Controllers
             {
                 Console.WriteLine(e);
                 throw;
+            }
+        }
+
+        [HttpGet("change")]
+        [ProducesResponseType(typeof(IEnumerable<CoinResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> ChangeOfCoinAsync([FromQuery] int amount)
+        {
+            try
+            {
+                var coins = await _coinService.ChangeOfCoinAsync(amount).ConfigureAwait(false);
+                var response = _mapper.Map<IEnumerable<CoinResponse>>(coins);
+                
+                return Ok(response);
+            }
+            catch (ChangeCoinException e)
+            {
+                return UnprocessableEntity(e);
+            }
+            catch (CoinNotFoundException e)
+            {
+                return BadRequest(e);
             }
         }
     }

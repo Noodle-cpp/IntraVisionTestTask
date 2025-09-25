@@ -24,6 +24,14 @@ export const router = createBrowserRouter([
                 lazy: () => import("@/features/payment/payment.page"),
             },
             {
+                path: ROUTES.CHECK,
+                lazy: () => import("@/features/check/check.page"),
+            },
+            {
+                path: ROUTES.PAYMENT_EXCEPTION,
+                lazy: () => import("@/features/payment-exception/payment-exception.page"),
+            },
+            {
                 path: ROUTES.HOME,
                 loader: () => redirect(ROUTES.SODAS),
             },
